@@ -1,0 +1,16 @@
+name: copilot
+mention: "@copilot"
+type: ai_assistant
+description: >
+  AI coding assistant identity. All requests are routed to the local Ollama
+  instance on the operator's private network. No requests are sent to GitHub
+  Copilot, OpenAI, or any external provider.
+backend:
+  provider: ollama
+  base_url: "http://localhost:11434"
+  no_external_dependencies: true
+  offline_capable: true
+sovereignty:
+  local_only: true
+  no_telemetry: true
+  no_vendor_lock_in: true
