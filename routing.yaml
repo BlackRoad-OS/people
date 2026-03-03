@@ -1,0 +1,30 @@
+version: 1
+description: >
+  Routes all @mention requests to the local Ollama instance.
+  No external AI providers (ChatGPT, GitHub Copilot, Claude, etc.) are used.
+
+providers:
+  ollama:
+    type: local
+    base_url: "http://localhost:11434"
+    no_external_dependencies: true
+    offline_capable: true
+
+default_backend: ollama
+
+mentions:
+  "@ollama":
+    backend: ollama
+    identity: people/ollama.yaml
+
+  "@copilot":
+    backend: ollama
+    identity: people/copilot.yaml
+
+  "@lucidia":
+    backend: ollama
+    identity: people/lucidia.yaml
+
+  "@blackboxprogramming":
+    backend: ollama
+    identity: people/blackboxprogramming.yaml

@@ -1,0 +1,59 @@
+version: 1
+description: >
+  OAuth 2.0 / OIDC authentication configuration for the BlackRoad system.
+  All authentication is handled locally — no external identity providers
+  (Google, GitHub OAuth, Auth0, Okta, etc.) are used. User sovereignty
+  is maintained at all times.
+
+# Self-hosted OAuth 2.0 / OIDC provider
+# Recommended: Authentik (https://goauthentik.io) — lightweight, self-hosted
+provider:
+  type: self_hosted
+  software: authentik
+  base_url: "http://localhost:9000"
+  network: tailscale
+  offline_capable: true
+  no_external_dependencies: true
+
+# Tailscale overlay network — private mesh between operator devices
+networking:
+  tailscale:
+    enabled: true
+    description: >
+      All inbound and outbound service traffic routes through the operator's
+      private Tailscale mesh network. No traffic is exposed to the public
+      internet without an explicit Cloudflare Tunnel rule.
+    exit_node: false
+    subnet_routes: true
+  cloudflare_tunnel:
+    enabled: true
+    description: >
+      Optional Cloudflare Tunnel for selectively exposing internal services.
+      Must be explicitly configured per service. No services are exposed by
+      default.
+    default_exposed: false
+
+# Authorized operators — only these identities may authenticate
+authorized_operators:
+  - identity: people/blackboxprogramming.yaml
+    role: owner
+    scopes: ["*"]
+  - identity: people/lucidia.yaml
+    role: ai_assistant
+    scopes: ["inference", "read"]
+
+# Blocked external providers — explicitly deny external auth/AI vendors
+blocked_providers:
+  - openai
+  - anthropic
+  - github_copilot
+  - codex
+  - google
+  - auth0
+  - okta
+
+sovereignty:
+  local_only: true
+  no_telemetry: true
+  no_vendor_lock_in: true
+  offline_capable: true
