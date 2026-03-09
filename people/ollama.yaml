@@ -1,0 +1,15 @@
+name: ollama
+mention: "@ollama"
+type: local_ai
+description: >
+  Local Ollama AI service running on the operator's private hardware.
+  All inference happens on-device with no external network calls.
+backend:
+  provider: ollama
+  base_url: "http://localhost:11434"
+  no_external_dependencies: true
+  offline_capable: true
+sovereignty:
+  local_only: true
+  no_telemetry: true
+  no_vendor_lock_in: true

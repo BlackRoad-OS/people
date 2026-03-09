@@ -1,0 +1,15 @@
+name: lucidia
+mention: "@lucidia"
+type: ai_assistant
+description: >
+  Lucidia AI assistant identity. All requests are routed to the local Ollama
+  instance on the operator's private network. No external AI providers are used.
+backend:
+  provider: ollama
+  base_url: "http://localhost:11434"
+  no_external_dependencies: true
+  offline_capable: true
+sovereignty:
+  local_only: true
+  no_telemetry: true
+  no_vendor_lock_in: true
